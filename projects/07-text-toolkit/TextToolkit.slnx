@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TextToolkit.Cli/TextToolkit.Cli.csproj" />
+    <Project Path="src/TextToolkit.Core/TextToolkit.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TextToolkit.Tests/TextToolkit.Tests.csproj" />
+  </Folder>
+</Solution>

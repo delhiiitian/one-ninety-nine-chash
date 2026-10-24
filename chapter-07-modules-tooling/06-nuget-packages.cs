@@ -6,13 +6,17 @@
 // which adds <PackageReference Include="Humanizer" Version="2.14.1" /> to the .csproj.
 #:package Humanizer@2.14.1
 
+using System.Globalization;
 using Humanizer;
+
+// Humanizer's words depend on the UI language; pin it so the output is the same everywhere.
+CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture = new CultureInfo("en-US");
 
 // Humanizer turns computer values into friendly text.
 Console.WriteLine(TimeSpan.FromMinutes(135).Humanize(precision: 2));        // 2 hours, 15 minutes
 Console.WriteLine(DateTime.UtcNow.AddHours(-3).Humanize());                  // 3 hours ago
 Console.WriteLine(DateTime.UtcNow.AddDays(2).Humanize());                    // 2 days from now
-Console.WriteLine("customer_order_id".Humanize());                           // Customer order id
+Console.WriteLine("customer_order_id".Humanize());                           // customer order id
 Console.WriteLine("PaymentFailedException".Humanize(LetterCasing.Title));    // Payment Failed Exception
 Console.WriteLine(1_234_567.ToWords());                                      // one million two hundred ...
 Console.WriteLine(3.Ordinalize() + " place");                                // 3rd place
