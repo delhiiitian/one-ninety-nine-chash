@@ -1,0 +1,9 @@
+add 2026-10-01 250.00 food lunch with team
+add 2026-10-02 1499 shopping running shoes
+add 2026-10-02 abc food oops
+import projects/06-expense-tracker/sample-bank-export.csv
+list
+summary
+months
+export expense-data/export.csv
+quit
