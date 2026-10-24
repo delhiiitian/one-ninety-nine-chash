@@ -1,0 +1,14 @@
+list
+deposit a100 250.50
+withdraw c300 1000
+transfer a100 b200 2000
+transfer a100 a100 5
+transfer a100 z999 5
+withdraw b200 -20
+deposit b200 lots
+freeze c300
+deposit c300 50
+transfer a100 c300 100
+explode
+list
+quit

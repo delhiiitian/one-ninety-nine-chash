@@ -1,0 +1,11 @@
+report
+student S02
+add S02 maths 95
+student S02
+undo
+top maths
+top art
+add S99 maths 50
+add S01 maths 140
+help
+quit
