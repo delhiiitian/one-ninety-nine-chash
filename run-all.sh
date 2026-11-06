@@ -5,16 +5,21 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 filter="${1:-}"
-passed=0; failed=(); log="$(mktemp)"
+passed=0; nfail=0; failed=(); log="$(mktemp)"
+
+# Stop any single step after 10 minutes. macOS has no "timeout" unless coreutils is installed.
+if command -v timeout > /dev/null; then limit=(timeout 600)
+elif command -v gtimeout > /dev/null; then limit=(gtimeout 600)
+else limit=(); fi
 
 run() {   # run <label> <command...>
   local label="$1"; shift
   [[ -n "$filter" && "$label" != *"$filter"* ]] && return
   printf '%-62s' "$label"
-  if timeout 600 "$@" > "$log" 2>&1; then
+  if ${limit[@]+"${limit[@]}"} "$@" > "$log" 2>&1; then
     echo "ok"; passed=$((passed + 1))
   else
-    echo "FAILED"; failed+=("$label"); sed 's/^/    /' "$log" | tail -20
+    echo "FAILED"; nfail=$((nfail + 1)); failed+=("$label"); sed 's/^/    /' "$log" | tail -20
   fi
 }
 
@@ -52,9 +57,9 @@ for dir in projects/0[1-6]-* projects/08-*; do
   [[ "$dir" == *02-number-guessing-game ]] && args=(-- 42)
   [[ "$dir" == *06-expense-tracker ]] && args=(-- "$(mktemp -d)")
   if [[ -f "$dir/sample-input.txt" ]]; then
-    run "$dir" bash -c 'd="$1"; shift; dotnet run --project "$d" "$@" < "$d/sample-input.txt"' _ "$dir" "${args[@]}"
+    run "$dir" bash -c 'd="$1"; shift; dotnet run --project "$d" "$@" < "$d/sample-input.txt"' _ "$dir" ${args[@]+"${args[@]}"}
   else
-    run "$dir" dotnet run --project "$dir" "${args[@]}"
+    run "$dir" dotnet run --project "$dir" ${args[@]+"${args[@]}"}
   fi
 done
 run "projects/07-text-toolkit (tests)" dotnet test projects/07-text-toolkit/TextToolkit.slnx
@@ -64,6 +69,6 @@ run "projects/09-notes-api (demo)"     bash projects/09-notes-api/demo.sh
 
 rm -f "$log"
 echo
-echo "Passed: $passed, failed: ${#failed[@]}"
-for f in "${failed[@]}"; do echo "  - $f"; done
-[[ ${#failed[@]} -eq 0 ]]
+echo "Passed: $passed, failed: $nfail"
+for f in ${failed[@]+"${failed[@]}"}; do echo "  - $f"; done
+[[ $nfail -eq 0 ]]
