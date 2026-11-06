@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- A class library: no Main, builds TextToolkit.Core.dll. Shared settings come from Directory.Build.props. -->
+</Project>

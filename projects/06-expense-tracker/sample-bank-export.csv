@@ -1,0 +1,7 @@
+Date,Amount,Category,Note
+2026-09-02,1200.00,rent,"September rent, share"
+2026-09-05,86.40,groceries,Weekly shop
+2026-09-12,not-a-number,groceries,Typo row
+2026-09-15,45.00,transport,Metro card
+2026-13-01,10.00,misc,Bad date row
+2026-10-03,1200.00,rent,"October rent, share"

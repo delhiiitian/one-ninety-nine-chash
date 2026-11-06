@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 7.5 The project file: what to build and how. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>                         <!-- Exe = app, Library = DLL -->
+    <TargetFramework>net10.0</TargetFramework>           <!-- which .NET version -->
+    <ImplicitUsings>enable</ImplicitUsings>              <!-- global usings for System, System.IO, ... -->
+    <Nullable>enable</Nullable>                          <!-- null-safety warnings on -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>  <!-- a warning fails the build -->
+    <AssemblyName>project-file-demo</AssemblyName>       <!-- name of the output file -->
+    <Version>1.4.2</Version>                             <!-- shown in the assembly -->
+    <Authors>C# in 199 Pages</Authors>
+  </PropertyGroup>
+
+  <!-- Settings that only apply to Release builds. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DefineConstants>$(DefineConstants);PRODUCTION</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Copy a data file next to the program when building. -->
+  <ItemGroup>
+    <None Update="appdata.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
