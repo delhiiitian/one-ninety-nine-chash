@@ -1,0 +1,41 @@
+# Open in VS Code (REST Client extension) or Visual Studio / Rider and click "Send Request".
+@api = http://localhost:5199
+
+### Health check
+GET {{api}}/health
+
+### Create a note
+POST {{api}}/notes
+Content-Type: application/json
+
+{ "title": "Buy milk", "body": "2 litres", "tags": ["home", "shopping"] }
+
+### List notes (pinned first, newest first)
+GET {{api}}/notes?page=1&pageSize=10
+
+### Search title and body
+GET {{api}}/notes?search=milk
+
+### Filter by tag
+GET {{api}}/notes?tag=home
+
+### Get one note
+GET {{api}}/notes/1
+
+### Update a note
+PUT {{api}}/notes/1
+Content-Type: application/json
+
+{ "title": "Buy milk and bread", "body": "", "tags": ["home"], "pinned": true }
+
+### Tag counts
+GET {{api}}/tags
+
+### Validation error (400)
+POST {{api}}/notes
+Content-Type: application/json
+
+{ "title": "" }
+
+### Delete a note
+DELETE {{api}}/notes/1
